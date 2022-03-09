@@ -2,6 +2,34 @@ const { Product } = require("../models/product");
 const { ApiError } = require("../middleware/apiError");
 const httpStatus = require("http-status");
 const product = require("../models/product");
+const mongoose = require("mongoose");
+
+const cloudinary = require("cloudinary").v2
+
+cloudinary.config({
+    cloud_name: "df0rxtpne",
+    api_key: "814979278633518",
+    api_secret: `${process.env.CLOUD_API_PW}`
+})
+
+const imgUpload = async (req) => {
+
+    try {
+        const upload = await cloudinary.uploader.upload(req.files.file.path, {
+            public_id: `${Date.now()}`,
+            folder: "csci3100_project",
+        })
+
+
+        return {
+            public_id: upload.public_id,
+            url: upload.url,
+        }
+
+    } catch (error) {
+        throw error
+    }
+}
 
 const addProduct = async (body) => {
     try {
@@ -66,6 +94,8 @@ const paginateProducts = async (req) => {
         }
 
         //console.log(aggQueryArray)
+
+        //console.log(req.body.snackType)
 
         if (req.body.snackType && req.body.snackType != "") {
             let snackTypeArray = req.body.snackType.map((item) =>
@@ -133,5 +163,6 @@ module.exports = {
     getallProducts,
     getProductById,
     deleteProductById,
-    paginateProducts
+    paginateProducts,
+    imgUpload
 }

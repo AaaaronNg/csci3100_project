@@ -38,12 +38,23 @@ const productsController = {
     },
     async paginateProducts(req, res, next) {
         try {
+
             const products = await productsService.paginateProducts(req);
             res.json(products);
         } catch (error) {
             next(error);
         }
     },
+    async imgUpload(req, res, next) {
+        try {
+
+            const img = await productsService.imgUpload(req);
+            res.json(img)
+
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = productsController

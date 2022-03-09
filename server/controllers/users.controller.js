@@ -1,6 +1,7 @@
 const { userService, authService } = require("../services")
 const httpStatus = require("http-status")
-const { ApiError } = require("../middleware/apiError")
+const { ApiError } = require("../middleware/apiError");
+const emailService = require("../services/email.service");
 require("dotenv").config();
 
 const usersController = {
@@ -30,6 +31,7 @@ const usersController = {
             const token = await authService.genAuthToken(user)
 
             //send email to verify account
+            await emailService.registerEmail(user.email, user)
             res.cookie("x-access-token", token).send({
                 user, token
             })
@@ -57,6 +59,23 @@ const usersController = {
             res.redirect(`${process.env.EMAIL_MAIL_URL}verify`);
         } catch (error) {
             throw next(error);
+        }
+    },
+    async updateUserCart(req, res, next) {
+        try {
+            const user = await userService.updateUserCart(req);
+            res.json(user);
+
+        } catch (error) {
+            next(error)
+        }
+    },
+    async removeFromCart(req, res, next) {
+        try {
+            const user = await userService.removeFromCart(req)
+            res.json(user)
+        } catch (error) {
+            next(error)
         }
     }
 }

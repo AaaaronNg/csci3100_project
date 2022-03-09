@@ -11,7 +11,8 @@ let grantsObject = {
     admin: {
         profile: allRights,
         snackType: allRights,
-        product: allRights
+        product: allRights,
+        transaction: allRights
     },
     user: {
         profile: {

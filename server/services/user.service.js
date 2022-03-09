@@ -18,12 +18,13 @@ const findUserById = async (_id) => {
 
 const updateUserProfile = async (req) => {
     try {
+        //console.log(req.body)
         const user = await User.findOneAndUpdate(
             {
                 _id: req.user._id
             }, {
             "$set": {
-                ...req.body.data
+                ...req.body
             }
         },
             {
@@ -68,10 +69,73 @@ const updateUserEmail = async (req) => {
     }
 }
 
+const updateUserCart = async (req) => {
+    try {
+        if (!req.body.currentUser) {
+            throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+        }
+        let duplicate = false;
+
+        req.body.currentUser.cart.forEach((item) => {
+            if (req.body.product._id == item._id) {
+                duplicate = true
+            }
+        })
+
+        if (duplicate) {
+            throw new ApiError(httpStatus.CONFLICT, "Product has been added to your Cart");
+        }
+
+        const user = await User.findOneAndUpdate(
+            { _id: req.body.currentUser._id },
+            {
+                $push: {
+                    cart: {
+                        _id: req.body.product._id,
+                        price: req.body.product.price,
+                        name: req.body.product.name,
+                        images: req.body.product.images
+                    }
+                }
+            },
+            { new: true }
+        )
+
+        return user
+
+    } catch (error) {
+        throw error
+    }
+}
+
+const removeFromCart = async (req) => {
+    try {
+        console.log(req.body.id)
+        const user = await User.findOneAndUpdate(
+            { _id: req.user._id },
+            {
+                $pull: {
+                    cart: { _id: req.body.id }
+                }
+            },
+            { new: true }
+        )
+        if (!user) {
+            throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+        }
+
+        return user
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     findUserByEmail,
     findUserById,
     updateUserProfile,
     updateUserEmail,
-    validateToken
+    validateToken,
+    updateUserCart,
+    removeFromCart
 }

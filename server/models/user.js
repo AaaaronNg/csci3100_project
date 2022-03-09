@@ -51,7 +51,12 @@ const userSchema = mongoose.Schema({
     verified: {
         type: Boolean,
         default: false
+    },
+    profilePic: {
+        type: Array,
+        default: [],
     }
+
 })
 
 // static function 

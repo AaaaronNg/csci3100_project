@@ -20,8 +20,10 @@ router
 
 
 router.post("/paginate/all", productsController.paginateProducts);
-
 router.get("/all", productsController.getallProducts);
+
+// upload img
+router.post("/upload", auth("createAny", "product"), formidableMiddleware(), productsController.imgUpload)
 
 
 module.exports = router

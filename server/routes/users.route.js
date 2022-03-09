@@ -11,4 +11,12 @@ router.patch("/email", auth("updateOwn", "profile"), usersController.updateUserE
 
 router.get("/verify", usersController.verifyAccount);
 
+router.patch("/updateCart", auth("updateOwn", "profile"), usersController.updateUserCart)
+
+router.patch(
+    "/removeFromCart",
+    auth("updateOwn", "profile"),
+    usersController.removeFromCart
+)
+
 module.exports = router

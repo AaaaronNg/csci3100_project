@@ -4,6 +4,7 @@ const authRoute = require("./auth.route")
 const userRoute = require("./users.route")
 const snackTypeRoute = require("./snackType.route")
 const productRoute = require("./product.route")
+const transactionRoute = require("./transaction.route")
 
 
 const routesIndex = [
@@ -22,6 +23,10 @@ const routesIndex = [
     {
         path: "/products",
         route: productRoute
+    },
+    {
+        path: "/transaction",
+        route: transactionRoute
     }
 ]
 
