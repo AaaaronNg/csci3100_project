@@ -17,6 +17,8 @@ export const UPDATE_USER_PROFILE = "update_user_profile"
 export const UPDATE_USER_EMAIL = "update_user_email"
 export const USER_ADD_TO_CART = "user_add_to_cart"
 export const PURCHASE_SUCCESS = "purchase_success"
+export const GET_ALL_USERS = "get_all_users"
+export const UPDATE_USER_PROFILEPIC = "update_user_profile_pic"
 
 //notification
 export const ERROR = "error"

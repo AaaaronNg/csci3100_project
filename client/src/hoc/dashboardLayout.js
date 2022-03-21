@@ -35,6 +35,10 @@ const DashboardLayout = (props) => {
         {
             name: "Site Setting",
             link: "/dashboard/manage_site"
+        },
+        {
+            name: "User List",
+            link: "/dashboard/user_list"
         }
     ]
 

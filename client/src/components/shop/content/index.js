@@ -39,7 +39,7 @@ const Content = ({ products, changeCurrentPage }) => {
                 products.totalDocs === 0 ? <div class="h3">There is no result</div> : <>
                     <div class="album py-5 bg-light">
 
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
                             {
                                 products.docs.map((item, i) => (
                                     <div class="col">

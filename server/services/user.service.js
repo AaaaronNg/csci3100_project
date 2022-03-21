@@ -4,6 +4,22 @@ const httpStatus = require("http-status")
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+
+const getAllUsers = async () => {
+    try {
+        const users = await User.find({})
+            .sort([["_id", "asc"]])
+
+        if (!users) {
+            return new ApitError(httpStatus.NOT_FOUND, "user not found")
+        }
+
+        return users
+    } catch (error) {
+        throw error
+    }
+}
+
 const findUserByEmail = async (email) => {
     return await User.findOne({ email: email })
 }
@@ -130,6 +146,46 @@ const removeFromCart = async (req) => {
     }
 }
 
+const removeProfilePic = async (req) => {
+    try {
+        const user = await User.findOneAndUpdate(
+            { _id: req.body.userId },
+            {
+                $set: {
+                    "profilePic": []
+                }
+            },
+            { new: true }
+        )
+        if (!user) {
+            throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+        }
+        return user
+    } catch (error) {
+        throw error
+    }
+}
+
+const addProfilePic = async (req) => {
+    try {
+        const user = await User.findOneAndUpdate(
+            { _id: req.body.userId },
+            {
+                $push: {
+                    profilePic: req.body.url
+                }
+            },
+            { new: true }
+        )
+        if (!user) {
+            throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+        }
+        return user
+    } catch (error) {
+        throw error
+    }
+}
+
 module.exports = {
     findUserByEmail,
     findUserById,
@@ -137,5 +193,8 @@ module.exports = {
     updateUserEmail,
     validateToken,
     updateUserCart,
-    removeFromCart
+    removeFromCart,
+    getAllUsers,
+    addProfilePic,
+    removeProfilePic
 }

@@ -4,7 +4,9 @@ import {
     UPDATE_USER_PROFILE,
     UPDATE_USER_EMAIL,
     USER_ADD_TO_CART,
-    PURCHASE_SUCCESS
+    PURCHASE_SUCCESS,
+    GET_ALL_USERS,
+    UPDATE_USER_PROFILEPIC
 } from "../types"
 
 let DEFAULT_USER_STATE = {
@@ -56,6 +58,12 @@ export default function usersReducer(state = DEFAULT_USER_STATE, action) {
                     ...state.data, history: action.payload.history, cart: []
                 }, cart: []
             }
+        case GET_ALL_USERS:
+            return {
+                ...state, userList: action.payload
+            }
+
+
 
         default:
             return state

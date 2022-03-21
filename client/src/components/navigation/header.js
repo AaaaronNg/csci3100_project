@@ -41,15 +41,6 @@ const Header = ({ user, logoutUser }) => {
                 </Link>
 
                 <ul class="nav nav-pills">
-
-                    <Link class="me-3 pt-2 text-dark text-decoration-none" to="/shop">
-                        <BsQuestionCircle size={25} />
-                    </Link>
-
-                    <Link class="me-3 pt-2 text-dark text-decoration-none" to="/dashboard/user_cart">
-                        <BsShop size={25} />
-                    </Link>
-
                     {
                         user.auth ?
                             <>

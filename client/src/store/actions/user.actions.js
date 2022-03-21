@@ -6,6 +6,31 @@ import { getAuthHeader, removeTokenCookie, getTokenCookie } from "../../utils/to
 axios.defaults.headers.post["Content-Type"] = "application/json"
 
 
+export const getAllUsers = () => {
+    return async (dispatch) => {
+        try {
+            const users = await axios.get("/api/users/userList")
+            dispatch(actions.getAllUsers(users.data))
+        } catch (error) {
+            dispatch(actions.error(error.response.data.message))
+        }
+    }
+}
+
+export const updatePW = ({ password, id }) => {
+    return async (dispatch) => {
+        try {
+            await axios.patch("/api/auth/updatePW", {
+                id: id,
+                password: password
+            }, getAuthHeader())
+            dispatch(actions.success("Password is updated"))
+        } catch (error) {
+            dispatch(actions.error(error.response.data.message))
+        }
+    }
+}
+
 export const userRegister = (values) => {
     return async (dispatch) => {
         try {
@@ -160,7 +185,6 @@ export const removeFromCart = (item) => {
 export const userPurchaseSuccess = (orderId) => {
     return async (dispatch) => {
         try {
-
             const user = await axios.post("/api/transaction", { orderId }, getAuthHeader())
             dispatch(actions.success("Thank you for your purchase"))
             dispatch(actions.userPurchaseSuccess(user.data))
@@ -170,4 +194,23 @@ export const userPurchaseSuccess = (orderId) => {
             dispatch(actions.error(error.response.data.message))
         }
     }
+}
+
+export const addProfilePic = (profilePicUrl) => {
+    return async (dispatch) => {
+        try {
+
+            await axios.patch("/api/users/rmoveProfilePic", { userId: profilePicUrl.userId }, getAuthHeader())
+            const user = await axios.patch("/api/users/addProfilePic",
+                { userId: profilePicUrl.userId, url: profilePicUrl.url },
+                getAuthHeader()
+            )
+            dispatch(actions.success("Your profile picture is updated"))
+            console.log(user.data)
+            dispatch(actions.updateUserProfile(user.data))
+        } catch (error) {
+            dispatch(actions.error(error.response.data.message))
+        }
+    }
+
 }

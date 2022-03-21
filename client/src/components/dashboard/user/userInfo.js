@@ -6,6 +6,9 @@ import * as Yup from "yup"
 import { useDispatch, useSelector } from "react-redux"
 import { userUpdateProfile } from "store/actions/user.actions"
 import Loader from "utils/lorder"
+import Modal from "./modal"
+import { updatePW } from "store/actions/user.actions"
+import Uploadprofile from "./uploadprofile"
 
 
 const UserInfo = () => {
@@ -35,6 +38,27 @@ const UserInfo = () => {
 
     })
 
+    const formikpw = useFormik({
+        initialValues: {
+            password: "", confirm_password: ""
+        },
+        validationSchema: Yup.object({
+            password: Yup.string().required("This field is required"),
+            confirm_password: Yup.string()
+                .required("This field is required")
+                .oneOf([Yup.ref("password"), null], "Password must match")
+
+
+        }),
+        onSubmit: (values) => {
+            setLoading(true)
+            let password = values.confirm_password
+            let id = users.data._id
+            dispatch(updatePW({ password, id }))
+
+        }
+    })
+
     useEffect(() => {
         if (notifications && notifications.success) {
             setLoading(false)
@@ -49,6 +73,9 @@ const UserInfo = () => {
             <div class="h1 fw-bold">User Information</div>
 
             <div class=" w-100">
+                <Uploadprofile />
+
+
                 {
                     loading ? <Loader /> : <form onSubmit={formik.handleSubmit}>
                         <div class="row py-3">
@@ -94,12 +121,20 @@ const UserInfo = () => {
 
 
                         <button class="btn btn-primary btn-sm" type="submit">Update Profile</button>
+
                     </form>
 
+
+
                 }
+                <div class="py-4">
+                    <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#userChangePWModal">Change Password</button>
+                </div>
+
+
 
             </div>
-
+            <Modal formik={formikpw} loading={loading} />
         </DashboardLayout>
     </>
 

@@ -42,6 +42,15 @@ const authController = {
         } catch (error) {
             next(error)
         }
+    },
+    async updatePW(req, res, next) {
+        try {
+            //console.log(req.body)
+            const user = await authService.updatePW(req);
+            res.json(user)
+        } catch (error) {
+            next(error)
+        }
     }
 }
 

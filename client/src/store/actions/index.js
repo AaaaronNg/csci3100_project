@@ -14,7 +14,9 @@ import {
     ADD_PRODUCT,
     GET_SNACKTYPE_BY_ID,
     USER_ADD_TO_CART,
-    PURCHASE_SUCCESS
+    PURCHASE_SUCCESS,
+    GET_ALL_USERS,
+    UPDATE_USER_PROFILEPIC
 } from "../types"
 
 // product
@@ -71,6 +73,16 @@ export const userAddToCart = (data) => ({
 
 export const userPurchaseSuccess = (data) => ({
     type: PURCHASE_SUCCESS,
+    payload: data
+})
+
+export const getAllUsers = (data) => ({
+    type: GET_ALL_USERS,
+    payload: data
+})
+
+export const updateProfilePIc = (data) => ({
+    type: UPDATE_USER_PROFILEPIC,
     payload: data
 })
 

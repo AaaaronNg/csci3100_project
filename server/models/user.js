@@ -75,7 +75,18 @@ userSchema.methods.generateAuthToken = function () {
 userSchema.methods.comparePassword = async function (pwd) {
     const user = this
     const match = await bcrypt.compare(pwd, user.password)
+    //console.log(match);
     return match
+}
+
+userSchema.methods.updatePassword = async function (pwd) {
+
+    const user = this
+    user.password = pwd
+    //user.password = hash;
+    //console.log(hash)
+
+
 }
 
 userSchema.methods.generateRegisterToken = function () {

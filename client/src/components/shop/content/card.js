@@ -8,7 +8,9 @@ const Card = ({ product, handleAddToCart, buttonDisabled }) => {
 
 
     return <><div class="card shadow-sm h-100 ">
-        <img src={product.images[0] ? product.images[0] : "/images/image_not_availble.png"} class="card-img-top" alt="not avaiable" />
+        <img src={product.images[0] ? product.images[0] : "/images/image_not_availble.png"}
+            // style={{ "height": "400px", "width": "335px" }}
+            class="card-img-top img-fluid" alt="not avaiable" />
 
         <div class="card-body ">
             <h6 class="card-title">{product.name}</h6>

@@ -77,6 +77,33 @@ const usersController = {
         } catch (error) {
             next(error)
         }
+    },
+    async getAllUsers(req, res, next) {
+        try {
+            const users = await userService.getAllUsers()
+            res.json(users)
+        } catch (error) {
+            next(error)
+        }
+    },
+    async removeProfilePic(req, res, next) {
+        try {
+            const user = await userService.removeProfilePic(req)
+            res.json(user)
+
+        } catch (error) {
+            next(error)
+        }
+    },
+    async addProfilePic(req, res, next) {
+        try {
+            const user = await userService.addProfilePic(req)
+            res.json(user)
+
+        } catch (error) {
+            next(error)
+        }
+
     }
 }
 

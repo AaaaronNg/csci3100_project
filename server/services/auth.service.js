@@ -43,9 +43,25 @@ const signInWithEmailAndPassword = async (email, password) => {
     }
 }
 
+const updatePW = async (req) => {
+    try {
+        const user = await userService.findUserById(req.body.id)
+        if (!user) {
+            throw new ApiError(httpStatus.UNAUTHORIZED, "User not found.")
+        }
+        await user.updatePassword(req.body.password)
+        await user.save()
+        return user
+        //console.log(req.body)
+    } catch (error) {
+        throw error
+    }
+}
+
 
 module.exports = {
     createUser,
     genAuthToken,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    updatePW
 }

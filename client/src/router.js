@@ -18,6 +18,7 @@ import Shop from "components/shop/index"
 import VerifyPage from "components/auth/verifyPage/index"
 import MyCart from "components/dashboard/myCart/index"
 import PurchaseHis from "components/dashboard/purchaseHis/index"
+import UserList from "components/dashboard/admin/userList/index"
 
 import RouterGuard from "./hoc/routeGuard"
 
@@ -87,6 +88,13 @@ const Router = () => {
                                         <PurchaseHis />
                                     </RouterGuard>
                                 } />
+
+                                <Route path="/dashboard/user_list" element={
+                                    <RouterGuard>
+                                        <UserList />
+                                    </RouterGuard>
+                                } />
+
 
 
                             </Routes>
